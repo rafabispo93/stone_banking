@@ -16,3 +16,6 @@ config :banking, BankingWeb.Endpoint,
 
 # Print only warnings and errors during test
 config :logger, level: :warn
+
+# Descrease a bit of the security to speed up the tests
+config :bcrypt_elixir, :log_rounds, 4
