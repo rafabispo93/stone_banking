@@ -20,7 +20,8 @@ defmodule Banking.MixProject do
   def application do
     [
       mod: {Banking.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:phoenix, :cowboy, :logger, :gettext,
+                           :phoenix_ecto, :postgrex, :comeonin, :runtime_tools]
     ]
   end
 
@@ -41,7 +42,8 @@ defmodule Banking.MixProject do
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
-      {:bcrypt_elixir, "~> 2.0"}
+      {:bcrypt_elixir, "~> 2.0"},
+      {:cors_plug, "~> 1.1"}
     ]
   end
 

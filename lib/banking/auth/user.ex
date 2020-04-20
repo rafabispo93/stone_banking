@@ -12,7 +12,6 @@ defmodule Banking.Auth.User do
     field :surname, :string
     field :user_id, Ecto.UUID
     field :password, :string, virtual: true
-    field :password_hash, :string
 
     timestamps(type: :utc_datetime_usec)
   end
