@@ -9,6 +9,7 @@ defmodule Banking.Repo.Migrations.CreateUsers do
       add :surname, :string
       add :cpf, :string
       add :email, :string
+      add :password_hash, :string
       add :is_active, :boolean, default: false, null: false
 
       timestamps()

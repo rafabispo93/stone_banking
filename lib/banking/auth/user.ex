@@ -12,16 +12,23 @@ defmodule Banking.Auth.User do
     field :surname, :string
     field :user_id, Ecto.UUID
     field :password, :string, virtual: true
+    field :password_hash, :string
 
     timestamps(type: :utc_datetime_usec)
   end
 
   @doc false
-  def changeset(user, attrs) do
+  def changeset(user, params \\ %{}) do
     user
-    |> cast(attrs, [:user_id, :name, :surname, :cpf, :email, :is_active, :password])
-    |> validate_required([:user_id, :name, :surname, :cpf, :email, :is_active, :password])
+    |> cast(params, [:user_id, :name, :surname, :cpf, :email, :is_active, :password])
+    |> validate_required([:user_id, :name, :surname, :cpf, :email, :password])
     |> put_password_hash()
+  end
+
+  defimpl Jason.Encoder, for: Banking.Auth.User do
+    def encode(value, opts) do
+      Jason.Encode.map(Map.take(value, [:user_id, :name, :surname, :cpf, :email, :is_active, :password]), opts)
+    end
   end
 
   defp put_password_hash(
@@ -33,5 +40,5 @@ defmodule Banking.Auth.User do
   defp put_password_hash(changeset) do
     changeset
   end
-
 end
+

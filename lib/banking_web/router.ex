@@ -10,5 +10,7 @@ defmodule BankingWeb.Router do
 
     get "/users", UserController, :index
     get "/users/:id", UserController, :show
+    post "/user/add", UserController, :create
+    post "/account/add", AccountController, :create
   end
 end

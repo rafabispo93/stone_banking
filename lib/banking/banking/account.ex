@@ -9,7 +9,7 @@ defmodule Banking.Banking.Account do
     field :agency, :string
     field :balance, :decimal
     field :is_active, :boolean, default: false
-    field :number, :string
+    field :number, :integer, default: :rand.uniform(999999)
     field :type, :string
 
     timestamps()
@@ -18,7 +18,13 @@ defmodule Banking.Banking.Account do
   @doc false
   def changeset(account, attrs) do
     account
-    |> cast(attrs, [:account_id, :number, :agency, :type, :balance, :is_active])
-    |> validate_required([:account_id, :number, :agency, :type, :balance, :is_active])
+    |> cast(attrs, [:account_id, :agency, :type, :number, :balance, :is_active])
+    |> validate_required([:account_id, :agency, :type])
+  end
+
+  defimpl Jason.Encoder, for: Banking.Banking.Account do
+    def encode(value, opts) do
+      Jason.Encode.map(Map.take(value, [:account_id, :number, :agency, :type, :balance, :is_active]), opts)
+    end
   end
 end
