@@ -22,6 +22,5 @@ defmodule BankingWeb.AccountController do
           {:error, err} ->
             json conn |> put_status(:bad_request), %{errors: ["unable to create account", err] }
         end
-        # json conn, ""
     end
 end

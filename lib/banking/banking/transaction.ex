@@ -8,6 +8,7 @@ defmodule Banking.Banking.Transaction do
     field :value, :decimal
     field :account_id, :binary_id
     field :user_id, :binary_id
+    field :type, :string
 
     timestamps()
   end
@@ -15,7 +16,13 @@ defmodule Banking.Banking.Transaction do
   @doc false
   def changeset(transaction, attrs) do
     transaction
-    |> cast(attrs, [:value])
-    |> validate_required([:value])
+    |> cast(attrs, [:id, :value, :type, :user_id, :account_id])
+    |> validate_required([:value, :account_id, :type])
+  end
+
+  defimpl Jason.Encoder, for: Banking.Banking.Transaction do
+    def encode(value, opts) do
+      Jason.Encode.map(Map.take(value, [:id, :value, :type, :user_id, :account_id]), opts)
+    end
   end
 end

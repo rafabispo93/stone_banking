@@ -10,7 +10,7 @@ defmodule Banking.Auth.User do
     field :is_active, :boolean, default: false
     field :name, :string
     field :surname, :string
-    field :user_id, Ecto.UUID
+    field :user_id, Ecto.UUID, default: Ecto.UUID.generate()
     field :password, :string, virtual: true
     field :password_hash, :string
 
@@ -20,14 +20,14 @@ defmodule Banking.Auth.User do
   @doc false
   def changeset(user, params \\ %{}) do
     user
-    |> cast(params, [:user_id, :name, :surname, :cpf, :email, :is_active, :password])
-    |> validate_required([:user_id, :name, :surname, :cpf, :email, :password])
+    |> cast(params, [:id, :user_id, :name, :surname, :cpf, :email, :is_active, :password])
+    |> validate_required([:name, :surname, :cpf, :email, :password])
     |> put_password_hash()
   end
 
   defimpl Jason.Encoder, for: Banking.Auth.User do
     def encode(value, opts) do
-      Jason.Encode.map(Map.take(value, [:user_id, :name, :surname, :cpf, :email, :is_active, :password]), opts)
+      Jason.Encode.map(Map.take(value, [:id, :user_id, :name, :surname, :cpf, :email, :is_active, :password]), opts)
     end
   end
 

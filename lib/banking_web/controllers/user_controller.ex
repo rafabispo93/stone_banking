@@ -22,6 +22,5 @@ defmodule BankingWeb.UserController do
           {:error, _changeset} ->
             json conn |> put_status(:bad_request), %{errors: ["unable to create user"] }
         end
-        # json conn, ""
     end
 end

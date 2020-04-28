@@ -9,8 +9,16 @@ defmodule BankingWeb.Router do
     pipe_through :api
 
     get "/users", UserController, :index
-    get "/users/:id", UserController, :show
+    get "/user/:id", UserController, :show
     post "/user/add", UserController, :create
+
+    get "/accounts", AccountController, :index
+    get "/account/:id", AccountController, :show
     post "/account/add", AccountController, :create
+
+    get "/transactions", TransactionController, :index
+    get "/transaction/:id", TransactionController, :show
+    post "/transaction", TransactionController, :create
+   
   end
 end
